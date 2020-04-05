@@ -20,6 +20,13 @@ unsigned char*		g_puszBuffer;
 unsigned int		g_uiContentOffset;
 unsigned int		g_uiContentLength;
 
+
+int PrintUsage()
+{
+	printf("test_program [input_file_path]\n");
+	return 0;
+}
+
 int CheckID(unsigned char* puszFileBuffer)
 {
 	if( ( *puszFileBuffer == 'T' ) &&
@@ -84,23 +91,7 @@ int	ParseContent(unsigned char* puszFileBuffer)
 }
 
 
-
-int SaveTargetFile()
-{
-	FILE*	fp;
-	fp = fopen("/home/yang/output.txt","wb");
-	if( NULL == fp )
-	{
-		return -1;
-	}
-	fwrite(g_puszBuffer,1024,1,fp);
-
-	fclose(fp);
-
-	return 0;
-}
-
-unsigned long get_file_size(const char *path)
+unsigned long GetFileSize(const char *path)
 {
 	unsigned long filesize = -1;	
 	struct stat statbuff;
@@ -124,6 +115,7 @@ int main(int argc, char* argv[])
 	g_uiContentLength	= 0;
 	
 	if( argc < 2 ){
+		PrintUsage();
 		exit(0);
 	}
 
@@ -131,11 +123,10 @@ int main(int argc, char* argv[])
 
 	//generate_file(argv[1]);
 
-	g_iFileLength = get_file_size(argv[1]);
+	g_iFileLength = GetFileSize(argv[1]);
 	printf("file length:%d\n",g_iFileLength);
 
 	fp = fopen(argv[1],"rb");
-
 	if(NULL == fp){
 		printf("open file error\n");
 		exit(-1);
@@ -146,7 +137,7 @@ int main(int argc, char* argv[])
 	if( NULL == g_puszBuffer )
 	{
 		printf("malloc memory error\n");
-		exit(-1);
+		goto error_exit;
 	}
 
 	iResult = fread(g_puszBuffer,1048576,1,fp);
@@ -158,13 +149,13 @@ int main(int argc, char* argv[])
 	iResult = CheckID(g_puszBuffer);
 	if( -1 == iResult )
 	{
-		exit(-1);
+		goto error_exit;
 	}
 
 	iResult = CheckHeadBlock(g_puszBuffer);
 	if( -1 == iResult )
 	{
-		exit(-1);
+		goto error_exit;
 	}
 
 	iResult = ParseContent(g_puszBuffer);
@@ -172,5 +163,7 @@ int main(int argc, char* argv[])
 	free(g_puszBuffer);
 	fclose(fp);
 
-	return STATUS_SUCCESSFUL;
+error_exit:
+	printf("program exit\n");
+	exit(0);
 }

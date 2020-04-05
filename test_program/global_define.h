@@ -16,10 +16,6 @@
 #define     INPUT_PARAMETER
 #define     OUTPUT_PARAMETER
 
-#define     STATUS_SUCCESSFUL           0
-#define     STATUS_FAIL                 -1
-#define     STATUS_ERROR                -2
-
 
 typedef struct _TEST_FILE_HEADER_{
     char            szMagicWord[4];

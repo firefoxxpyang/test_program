@@ -15,7 +15,13 @@
 
 #include "global_define.h"
 
-int	generate_file(char*		pszFilePath)
+int PrintUsage()
+{
+	printf("test_program [input_file_path]\n");
+	return 0;
+}
+
+int	GenerateFile(char*		pszFilePath)
 {
 	FILE*				fp;
 	unsigned char		uszBuffer[1048576];
@@ -55,12 +61,13 @@ int main(int argc, char* argv[])
 	int				iResult;
 
 	if( argc < 2 ){
+		PrintUsage();
 		exit(0);
 	}
 
 	printf("%s\n",argv[1]);
 
-	generate_file(argv[1]);
+	GenerateFile(argv[1]);
 
 	exit(0);
 }
