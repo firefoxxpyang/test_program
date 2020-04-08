@@ -27,11 +27,12 @@ int CheckID(unsigned char* puszFileBuffer)
 		( *( puszFileBuffer + 2 ) == 'S' ) &&
 		( *( puszFileBuffer + 3 ) == 'T' ) )
 	{	
-		printf("test file\n");
+		printf("File Header ID error\n");
 		return 0;
+	}else{
+		printf("File Header ID ok\n");
+		return -1;
 	}
-
-	return -1;
 }
 
 int	CheckHeadBlock(unsigned char* puszFileBuffer)
