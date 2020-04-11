@@ -29,17 +29,44 @@ int PrintUsage()
 
 int CheckID(unsigned char* puszFileBuffer)
 {
-	if( ( *puszFileBuffer == 'T' ) &&
-		( *( puszFileBuffer + 1 ) == 'E' ) &&
-		( *( puszFileBuffer + 2 ) == 'S' ) &&
-		( *( puszFileBuffer + 3 ) == 'T' ) )
-	{	
+	char* puszCurrentChar;
+	puszCurrentChar = puszFileBuffer;
+	if( 'T' == *puszCurrentChar ){
+		printf("first char ok\n");
+	}
+	else{
 		printf("File Header ID error\n");
-		return 0;
-	}else{
-		printf("File Header ID ok\n");
 		return -1;
 	}
+
+	puszCurrentChar++;
+	if( 'E' == *puszCurrentChar ){
+		printf("second char ok\n");
+	}
+	else{
+		printf("File Header ID error\n");
+		return -1;
+	}
+
+	puszCurrentChar++;
+	if( 'S' == *puszCurrentChar ){
+		printf("third char ok\n");
+	}
+	else{
+		printf("File Header ID error\n");
+		return -1;
+	}
+
+	puszCurrentChar++;
+	if( 'T' == *puszCurrentChar ){
+		printf("fourth char ok\n");
+	}
+	else{
+		printf("File Header ID error\n");
+		return -1;
+	}
+
+	return 0;
 }
 
 int	CheckHeadBlock(unsigned char* puszFileBuffer)
