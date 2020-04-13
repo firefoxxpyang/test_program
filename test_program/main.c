@@ -172,6 +172,8 @@ int main(int argc, char* argv[])
 	if( 0 > iResult )
 	{
 		printf("read file error\n");
+	}else{
+		printf("%s\n",g_puszBuffer);
 	}
 
 	iResult = CheckID(g_puszBuffer);
