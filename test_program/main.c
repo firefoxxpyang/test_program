@@ -168,7 +168,7 @@ int main(int argc, char* argv[])
 		goto error_exit;
 	}
 
-	iResult = fread(g_puszBuffer,1048576,1,fp);
+	iResult = fread(g_puszBuffer, g_iFileLength, 1, fp);
 	if( 0 > iResult )
 	{
 		printf("read file error\n");
