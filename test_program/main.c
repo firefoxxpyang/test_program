@@ -35,7 +35,7 @@ int CheckID(unsigned char* puszFileBuffer)
 		printf("first char ok\n");
 	}
 	else{
-		printf("File Header ID error\n");
+		printf("first char error\n");
 		return -1;
 	}
 
@@ -44,7 +44,7 @@ int CheckID(unsigned char* puszFileBuffer)
 		printf("second char ok\n");
 	}
 	else{
-		printf("File Header ID error\n");
+		printf("second char error\n");
 		return -1;
 	}
 
@@ -53,7 +53,7 @@ int CheckID(unsigned char* puszFileBuffer)
 		printf("third char ok\n");
 	}
 	else{
-		printf("File Header ID error\n");
+		printf("third char error\n");
 		return -1;
 	}
 
@@ -62,7 +62,7 @@ int CheckID(unsigned char* puszFileBuffer)
 		printf("fourth char ok\n");
 	}
 	else{
-		printf("File Header ID error\n");
+		printf("fourth char error\n");
 		return -1;
 	}
 
