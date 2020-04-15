@@ -77,6 +77,16 @@ int CheckID(unsigned char* puszFileBuffer)
 		return -1;
 	}
 
+	puszCurrentChar = puszFileBuffer + 15;
+
+	if(*puszCurrentChar < 15){
+		return -1;
+	}
+
+	if(*puszCurrentChar > 17){
+		return -1;
+	}
+
 	return 0;
 }
 
