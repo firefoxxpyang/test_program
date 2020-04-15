@@ -1,7 +1,6 @@
 #ifndef _GLOBAL_DEFINE_H_
 #define _GLOBAL_DEFINE_H_
 
-#define _TRACER_DEBUG_
 
 #ifdef _TRACER_DEBUG_
 #define     KdPrint(...) printf(__VA_ARGS__)

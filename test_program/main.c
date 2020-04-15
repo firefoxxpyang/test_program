@@ -13,7 +13,9 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 
+
 #include "global_define.h"
+
 
 unsigned int		g_iFileLength;
 unsigned char*		g_puszBuffer;
@@ -30,39 +32,48 @@ int PrintUsage()
 int CheckID(unsigned char* puszFileBuffer)
 {
 	char* puszCurrentChar;
+	bool bFirstCharCheck;
+	bool bSecondCharCheck;
+	bool bThirdCharCheck;
+	bool bFourthCharCheck;
+
 	puszCurrentChar = puszFileBuffer;
 	if( 'T' == *puszCurrentChar ){
-		printf("first char ok\n");
+		KdPrint("first char ok\n");
+		bFirstCharCheck = true;
 	}
 	else{
-		printf("first char error\n");
+		KdPrint("first char error\n");
 		return -1;
 	}
 
 	puszCurrentChar++;
 	if( 'E' == *puszCurrentChar ){
-		printf("second char ok\n");
+		bSecondCharCheck = true;
+		KdPrint("second char ok\n");
 	}
 	else{
-		printf("second char error\n");
+		KdPrint("second char error\n");
 		return -1;
 	}
 
 	puszCurrentChar++;
 	if( 'S' == *puszCurrentChar ){
-		printf("third char ok\n");
+		bThirdCharCheck = true;
+		KdPrint("third char ok\n");
 	}
 	else{
-		printf("third char error\n");
+		KdPrint("third char error\n");
 		return -1;
 	}
 
 	puszCurrentChar++;
 	if( 'T' == *puszCurrentChar ){
-		printf("fourth char ok\n");
+		bFourthCharCheck = true;
+		KdPrint("fourth char ok\n");
 	}
 	else{
-		printf("fourth char error\n");
+		KdPrint("fourth char error\n");
 		return -1;
 	}
 
@@ -81,7 +92,7 @@ int	CheckHeadBlock(unsigned char* puszFileBuffer)
 	else{
 		g_uiContentOffset = pstFileHeaderBlock->uiContentOffset;
 		g_uiContentLength = pstFileHeaderBlock->uiContentLength;
-		printf("have %d fields\n", pstFileHeaderBlock->uiFileds);
+		KdPrint("have %d fields\n", pstFileHeaderBlock->uiFileds);
 		return 0;
 	}
 
@@ -96,14 +107,14 @@ int	ParseContent(unsigned char* puszFileBuffer)
 	unsigned char*	puszBuffer;
 	int				i = 0;
 
-	printf("[ParseContent] size:%d\n",g_uiContentLength);
+	KdPrint("[ParseContent] size:%d\n",g_uiContentLength);
 
 	puszBuffer = malloc(g_uiContentLength);
 	puszCurrentChar = puszFileBuffer + g_uiContentOffset;
 
-	fprintf(stderr,"current puszFileBuffer:%lx\n", (uint64_t)puszFileBuffer);
-	fprintf(stderr,"current puszCurrentChar:%lx\n",(uint64_t)puszCurrentChar);
-	fprintf(stderr,"current char:%x\n",*puszCurrentChar);
+	KdFPrint(stderr,"current puszFileBuffer:%lx\n", (uint64_t)puszFileBuffer);
+	KdFPrint(stderr,"current puszCurrentChar:%lx\n",(uint64_t)puszCurrentChar);
+	KdFPrint(stderr,"current char:%x\n",*puszCurrentChar);
 
 	while( *puszCurrentChar != 0 )
 	{
@@ -111,9 +122,9 @@ int	ParseContent(unsigned char* puszFileBuffer)
 		puszCurrentChar++;
 		puszBuffer++;
 		i++;
-		//printf("current char:%x",*puszCurrentChar);
+		//KdPrint("current char:%x",*puszCurrentChar);
 	}
-	printf("parse length:%d\n",i);
+	KdPrint("parse length:%d\n",i);
 
 	return -1;
 }
@@ -147,16 +158,16 @@ int main(int argc, char* argv[])
 		exit(0);
 	}
 
-	printf("%s\n",argv[1]);
+	KdPrint("%s\n",argv[1]);
 
 	//generate_file(argv[1]);
 
 	g_iFileLength = GetFileSize(argv[1]);
-	printf("file length:%d\n",g_iFileLength);
+	KdPrint("file length:%d\n",g_iFileLength);
 
 	fp = fopen(argv[1],"rb");
 	if(NULL == fp){
-		printf("open file error\n");
+		KdPrint("open file error\n");
 		exit(-1);
 	}
 
@@ -164,16 +175,16 @@ int main(int argc, char* argv[])
 
 	if( NULL == g_puszBuffer )
 	{
-		printf("malloc memory error\n");
+		KdPrint("malloc memory error\n");
 		goto error_exit;
 	}
 
 	iResult = fread(g_puszBuffer, g_iFileLength, 1, fp);
 	if( 0 > iResult )
 	{
-		printf("read file error\n");
+		KdPrint("read file error\n");
 	}else{
-		printf("%s\n",g_puszBuffer);
+		KdPrint("%s\n",g_puszBuffer);
 	}
 
 	iResult = CheckID(g_puszBuffer);
@@ -194,6 +205,6 @@ int main(int argc, char* argv[])
 	fclose(fp);
 
 error_exit:
-	printf("program exit\n");
+	KdPrint("program exit\n");
 	exit(0);
 }
